@@ -1,9 +1,11 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  margin: 0%;
+  height: 100%;
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -14,8 +16,9 @@
   margin-bottom: 1em;
 }
 
-.leaflet-container {
-  margin: 0% auto;
-  height: 65vh;
-  width: 90%;
+.Contact {
+  padding: 7% 2%;
+  height: 25%;
+  text-align: left;
+  color: white;
 }
