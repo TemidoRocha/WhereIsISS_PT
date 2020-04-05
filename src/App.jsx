@@ -5,39 +5,86 @@ import { Component, Link } from 'react';
 import issData from './services/issData';
 
 import ISSMap from './components/ISSMap/ISSMap';
+import Info from './components/Info/Info';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      info: false,
+      zoom: 5,
       lat: null,
       lng: null,
-      zoom: 5,
+      altitude: null,
+      velocity: null,
+      visibility: null,
+      footprint: null,
+      timestamp: null,
+      daynum: null,
+      solar_lat: null,
+      solar_lon: null,
+      units: null,
     };
+    this.toggleInfo = this.toggleInfo.bind(this);
   }
   componentDidMount() {
     issData()
       .then((response) => {
+        console.log(response);
         this.setState({
           lat: response.latitude,
           lng: response.longitude,
+          altitude: response.altitude,
+          velocity: response.velocity,
+          visibility: response.visibility,
+          footprint: response.footprint,
+          timestamp: response.timestamp,
+          daynum: response.daynum,
+          solar_lat: response.solar_lat,
+          solar_lon: response.solar_lon,
+          units: response.units,
         });
       })
       .catch((error) => console.log(error));
+  }
+
+  toggleInfo() {
+    this.setState({
+      info: !this.state.info,
+    });
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <p>
-            This is the current location of the ISS
-            <br />
-            Latitude: {this.state.lat}
-            <br />
-            Longitude: {this.state.lng}
-          </p>
+          <img
+            id="buttonImg"
+            src="./../images/menu-white.svg"
+            alt="menu"
+            onClick={this.toggleInfo}
+          />
+          <div className="Title">
+            <h5>International Space Station Location</h5>
+          </div>
         </header>
+        {this.state.info ? (
+          <Info
+            lat={this.state.lat}
+            lng={this.state.lng}
+            altitude={this.state.altitude}
+            velocity={this.state.velocity}
+            visibility={this.state.visibility}
+            footprint={this.state.footprint}
+            timestamp={this.state.timestamp}
+            daynum={this.state.daynum}
+            solar_lat={this.state.solar_lat}
+            solar_lon={this.state.solar_lon}
+            units={this.state.units}
+          />
+        ) : (
+          ''
+        )}
         {this.state.lat && this.state.lng ? (
           <ISSMap lat={this.state.lat} lng={this.state.lng} zoom={this.state.zoom} />
         ) : (
