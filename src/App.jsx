@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.scss';
-import { Component } from 'react';
 
 import issData from './services/issData';
 
@@ -13,7 +12,8 @@ class App extends Component {
     super();
     this.state = {
       info: false,
-      zoom: 5,
+      trace: true,
+      zoom: 4,
       lat: null,
       lng: null,
       altitude: null,
@@ -25,8 +25,10 @@ class App extends Component {
       solar_lat: null,
       solar_lon: null,
       units: null,
+      pastPos: [],
     };
     this.toggleInfo = this.toggleInfo.bind(this);
+    this.toggleTrace = this.toggleTrace.bind(this);
   }
   componentDidMount() {
     this.fetchDataInterval();
@@ -37,9 +39,15 @@ class App extends Component {
       info: !this.state.info,
     });
   }
+  toggleTrace() {
+    this.setState({
+      trace: !this.state.trace,
+    });
+  }
   fetchDataInterval() {
     issData()
       .then((response) => {
+        const position = [response.latitude, response.longitude];
         this.setState({
           lat: response.latitude,
           lng: response.longitude,
@@ -52,6 +60,7 @@ class App extends Component {
           solar_lat: response.solar_lat,
           solar_lon: response.solar_lon,
           units: response.units,
+          pastPos: [...this.state.pastPos, position],
         });
       })
       .catch((error) => console.log(error));
@@ -63,7 +72,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar toggleInfo={this.toggleInfo} />
+        <NavBar toggleInfo={this.toggleInfo} toggleTrace={this.toggleTrace} />
         {this.state.info ? (
           <Info
             lat={this.state.lat}
@@ -82,7 +91,13 @@ class App extends Component {
           ''
         )}
         {this.state.lat && this.state.lng ? (
-          <ISSMap lat={this.state.lat} lng={this.state.lng} zoom={this.state.zoom} />
+          <ISSMap
+            lat={this.state.lat}
+            lng={this.state.lng}
+            zoom={this.state.zoom}
+            pastPos={this.state.pastPos}
+            trace={this.state.trace}
+          />
         ) : (
           <span>Loading...</span>
         )}
