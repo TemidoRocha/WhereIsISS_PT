@@ -29,6 +29,15 @@ class App extends Component {
     this.toggleInfo = this.toggleInfo.bind(this);
   }
   componentDidMount() {
+    this.fetchDataInterval();
+  }
+
+  toggleInfo() {
+    this.setState({
+      info: !this.state.info,
+    });
+  }
+  fetchDataInterval() {
     issData()
       .then((response) => {
         this.setState({
@@ -46,12 +55,9 @@ class App extends Component {
         });
       })
       .catch((error) => console.log(error));
-  }
-
-  toggleInfo() {
-    this.setState({
-      info: !this.state.info,
-    });
+    setTimeout(() => {
+      this.fetchDataInterval();
+    }, 3000);
   }
 
   render() {
