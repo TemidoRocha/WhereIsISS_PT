@@ -4,60 +4,35 @@
   margin: 0%;
   height: 100%;
 }
-
-.App-header {
-  min-height: 10vh;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  margin-bottom: 1em;
-  .Title {
-    margin: 0% auto;
-    h5 {
-      margin: 0.5em 2.5em;
-    }
-  }
-  #buttonImg {
-    margin: 0.5em 2.5em;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    transition: all 0.2s cubic-bezier(0, 1.26, 0.8, 1.28);
-    object-fit: cover;
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.1, 1.1);
-    }
-  }
-}
-
 .Contact {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   padding: 7% 2%;
   height: 13%;
   text-align: left;
   color: white;
   /* unvisited link */
   a:link {
+    margin-left: 1em;
     color: white;
   }
 
   /* visited link */
   a:visited {
+    margin-left: 1em;
     color: green;
   }
 
   /* mouse over link */
   a:hover {
+    margin-left: 1em;
     color: hotpink;
   }
 
   /* selected link */
   a:active {
+    margin-left: 1em;
     color: blue;
   }
 }

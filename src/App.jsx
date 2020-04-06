@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.scss';
-import { Component, Link } from 'react';
+import { Component } from 'react';
 
 import issData from './services/issData';
 
 import ISSMap from './components/ISSMap/ISSMap';
 import Info from './components/Info/Info';
+import NavBar from './components/NavBar/index';
 
 class App extends Component {
   constructor() {
@@ -30,7 +31,6 @@ class App extends Component {
   componentDidMount() {
     issData()
       .then((response) => {
-        console.log(response);
         this.setState({
           lat: response.latitude,
           lng: response.longitude,
@@ -57,17 +57,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img
-            id="buttonImg"
-            src="./../images/menu-white.svg"
-            alt="menu"
-            onClick={this.toggleInfo}
-          />
-          <div className="Title">
-            <h5>International Space Station Location</h5>
-          </div>
-        </header>
+        <NavBar toggleInfo={this.toggleInfo} />
         {this.state.info ? (
           <Info
             lat={this.state.lat}
@@ -92,7 +82,7 @@ class App extends Component {
         )}
         <footer className="Contact">
           <h5>Contact:</h5>
-          <a href="https://github.com/TemidoRocha">github.com/TemidoRocha</a>
+          <a href="https://github.com/TemidoRocha"> github.com/TemidoRocha</a>
         </footer>
       </div>
     );

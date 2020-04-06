@@ -1,4 +1,32 @@
-.InfoUl {
-  color: white;
-  list-style: none;
+.Info {
+  // margin: 0% auto;
+  li {
+    text-align: left;
+    color: white;
+    list-style: none;
+    border: thin solid grey;
+    padding: 1em;
+    margin: 0em 3em 3em 0em;
+    // margin-bottom: 0.5em;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px -3px #ccc;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .Info {
+    display: flex;
+    justify-content: space-around;
+
+    li {
+      text-align: left;
+      color: white;
+      list-style: none;
+      border: thin solid grey;
+      padding: 0.5em 1em;
+      margin-bottom: 0.5em;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px -3px #ccc;
+    }
+  }
 }
