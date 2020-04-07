@@ -7,8 +7,8 @@ function Info(props) {
       <ul>
         <li>lat: {props.lat.toFixed(3)}</li>
         <li>lng: {props.lng.toFixed(3)}</li>
-        <li>altitude: {props.altitude.toFixed(3)} km</li>
-        <li>velocity: {props.velocity.toFixed(3)} km/h</li>
+        <li>altitude: {props.altitude.toFixed(3)} m</li>
+        <li>velocity: {props.velocity.toFixed(3)} m/s</li>
       </ul>
 
       <ul>
