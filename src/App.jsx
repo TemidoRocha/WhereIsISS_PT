@@ -44,7 +44,6 @@ const App = () => {
       .catch((error) => console.log(error));
   }
 
-  // useEffect(() => fetchDataInterval());
   useEffect(() => {
     const spaceInterval = setTimeout(() => {
       fetchDataInterval();
@@ -59,7 +58,7 @@ const App = () => {
   function toggleTrace() {
     setTrace(!trace);
   }
-  console.log(pastPos);
+
   return (
     <div className="App">
       <NavBar toggleInfo={toggleInfo} toggleTrace={toggleTrace} />
