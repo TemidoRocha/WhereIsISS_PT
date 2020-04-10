@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 
 import issData from './services/issData';
@@ -7,107 +7,87 @@ import ISSMap from './components/ISSMap/ISSMap';
 import Info from './components/Info/Info';
 import NavBar from './components/NavBar/index';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      info: false,
-      trace: true,
-      zoom: 4,
-      lat: null,
-      lng: null,
-      altitude: null,
-      velocity: null,
-      visibility: null,
-      footprint: null,
-      timestamp: null,
-      daynum: null,
-      solar_lat: null,
-      solar_lon: null,
-      units: null,
-      pastPos: [],
-    };
-    this.toggleInfo = this.toggleInfo.bind(this);
-    this.toggleTrace = this.toggleTrace.bind(this);
-  }
-  componentDidMount() {
-    this.fetchDataInterval();
-  }
+const App = () => {
+  const [info, setInfo] = useState(false);
+  const [trace, setTrace] = useState(true);
+  const [zoom, setZoom] = useState(3);
+  const [pastPos, setPastPos] = useState([]);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [altitude, setAltitude] = useState(null);
+  const [velocity, setVelocity] = useState(null);
+  const [visibility, setVisibility] = useState(null);
+  const [footprint, setFootprint] = useState(null);
+  const [timestamp, setTimestamp] = useState(null);
+  const [daynum, setDaynum] = useState(null);
+  const [solar_lat, setSolar_lat] = useState(null);
+  const [solar_lon, setSolar_lon] = useState(null);
+  const [units, setUnits] = useState(null);
 
-  toggleInfo() {
-    this.setState({
-      info: !this.state.info,
-    });
-  }
-  toggleTrace() {
-    this.setState({
-      trace: !this.state.trace,
-    });
-  }
-  fetchDataInterval() {
+  function fetchDataInterval() {
     issData()
       .then((response) => {
         const position = [response.latitude, response.longitude];
-        this.setState({
-          lat: response.latitude,
-          lng: response.longitude,
-          altitude: response.altitude,
-          velocity: response.velocity,
-          visibility: response.visibility,
-          footprint: response.footprint,
-          timestamp: response.timestamp,
-          daynum: response.daynum,
-          solar_lat: response.solar_lat,
-          solar_lon: response.solar_lon,
-          units: response.units,
-          pastPos: [...this.state.pastPos, position],
-        });
+        setLat(response.latitude);
+        setLng(response.longitude);
+        setAltitude(response.altitude);
+        setVelocity(response.velocity);
+        setVisibility(response.visibility);
+        setFootprint(response.footprint);
+        setTimestamp(response.timestamp);
+        setDaynum(response.daynum);
+        setSolar_lat(response.solar_lat);
+        setSolar_lon(response.solar_lon);
+        setUnits(response.units);
+        setPastPos([...this.state.pastPos, position]);
       })
       .catch((error) => console.log(error));
     setTimeout(() => {
-      this.fetchDataInterval();
+      fetchDataInterval();
     }, 3000);
   }
 
-  render() {
-    return (
-      <div className="App">
-        <NavBar toggleInfo={this.toggleInfo} toggleTrace={this.toggleTrace} />
-        {this.state.info ? (
-          <Info
-            lat={this.state.lat}
-            lng={this.state.lng}
-            altitude={this.state.altitude}
-            velocity={this.state.velocity}
-            visibility={this.state.visibility}
-            footprint={this.state.footprint}
-            timestamp={this.state.timestamp}
-            daynum={this.state.daynum}
-            solar_lat={this.state.solar_lat}
-            solar_lon={this.state.solar_lon}
-            units={this.state.units}
-          />
-        ) : (
-          ''
-        )}
-        {this.state.lat && this.state.lng ? (
-          <ISSMap
-            lat={this.state.lat}
-            lng={this.state.lng}
-            zoom={this.state.zoom}
-            pastPos={this.state.pastPos}
-            trace={this.state.trace}
-          />
-        ) : (
-          <span>Loading...</span>
-        )}
-        <footer className="Contact">
-          <h5>Contact:</h5>
-          <a href="https://github.com/TemidoRocha"> github.com/TemidoRocha</a>
-        </footer>
-      </div>
-    );
+  useEffect(() => fetchDataInterval());
+
+  function toggleInfo() {
+    setInfo(!info);
   }
-}
+  
+  function toggleTrace() {
+    setTrace(!trace);
+  }
+
+  return (
+    <div className="App">
+      <NavBar toggleInfo={toggleInfo} toggleTrace={toggleTrace} />
+      {info ? (
+        <Info
+          lat={lat}
+          lng={lng}
+          altitude={altitude}
+          velocity={velocity}
+          visibility={visibility}
+          footprint={footprint}
+          timestamp={timestamp}
+          daynum={daynum}
+          solar_lat={solar_lat}
+          solar_lon={solar_lon}
+          units={units}
+        />
+      ) : (
+        ''
+      )}
+      {lat && lng ? (
+        <ISSMap lat={lat} lng={lng} zoom={zoom} pastPos={pastPos} trace={trace} />
+      ) : (
+        <span>Loading...</span>
+      )}
+      <footer className="Contact">
+        <h5>Contact:</h5>
+        <a href="https://github.com/TemidoRocha"> github.com/TemidoRocha</a>
+      </footer>
+    </div>
+  );
+};
 
 export default App;
