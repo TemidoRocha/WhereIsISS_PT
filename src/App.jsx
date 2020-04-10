@@ -39,24 +39,27 @@ const App = () => {
         setSolar_lat(response.solar_lat);
         setSolar_lon(response.solar_lon);
         setUnits(response.units);
-        setPastPos([...this.state.pastPos, position]);
+        setPastPos([...pastPos, position]);
       })
       .catch((error) => console.log(error));
-    setTimeout(() => {
-      fetchDataInterval();
-    }, 3000);
   }
 
-  useEffect(() => fetchDataInterval());
+  // useEffect(() => fetchDataInterval());
+  useEffect(() => {
+    const spaceInterval = setTimeout(() => {
+      fetchDataInterval();
+    }, 3000);
+    return () => clearTimeout(spaceInterval);
+  });
 
   function toggleInfo() {
     setInfo(!info);
   }
-  
+
   function toggleTrace() {
     setTrace(!trace);
   }
-
+  console.log(pastPos);
   return (
     <div className="App">
       <NavBar toggleInfo={toggleInfo} toggleTrace={toggleTrace} />
