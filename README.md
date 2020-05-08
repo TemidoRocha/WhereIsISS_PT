@@ -1,4 +1,4 @@
-Where is the internaltional space station?
+Where is the international space station?
 deployed with netlify: https://where-is-international-space-station.netlify.com
 API: https://wheretheiss.at/w/developer
 
