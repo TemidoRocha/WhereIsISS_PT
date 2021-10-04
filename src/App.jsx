@@ -10,7 +10,7 @@ import NavBar from './components/NavBar/index';
 const App = () => {
   const [info, setInfo] = useState(false);
   const [trace, setTrace] = useState(true);
-  const [zoom, setZoom] = useState(3);
+  const [zoom] = useState(3);
   const [pastPos, setPastPos] = useState([]);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);

@@ -28,11 +28,14 @@ function ISSMap(props) {
           url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
         {props.trace &&
-          props.pastPos.map((pastPosition, key, arr) => {
+          props.pastPos.reduce((acc, pastPosition, key, arr) => {
             if (key < arr.length - 7) {
-              return <Marker key={key} position={pastPosition} icon={pastIcon}></Marker>;
+              acc.push(<Marker key={key} position={pastPosition} icon={pastIcon}></Marker>);
+              return acc;
+            } else {
+              return acc;
             }
-          })}
+          }, [])}
         <Marker position={position} icon={myIcon}>
           <Popup>
             <a href="https://github.com/TemidoRocha">github.com/TemidoRocha</a>
